@@ -4,7 +4,7 @@ param(
 )
 
 
-# default script values 
+# default script values
 $taskName = "task5"
 
 $artifactsConfigPath = "$PWD/artifacts.json"
@@ -12,7 +12,7 @@ $resourcesTemplateName = "exported-template.json"
 $tempFolderPath = "$PWD/temp"
 
 if ($DownloadArtifacts) { 
-    Write-Output "Reading config" 
+    Write-Output "Reading config"
     $artifactsConfig = Get-Content -Path $artifactsConfigPath | ConvertFrom-Json 
 
     Write-Output "Checking if temp folder exists"
@@ -23,7 +23,7 @@ if ($DownloadArtifacts) {
 
     Write-Output "Downloading artifacts"
 
-    if (-not $artifactsConfig.resourcesTemplate) { 
+    if (-not $artifactsConfig.resourcesTemplate) {
         throw "Artifact config value 'resourcesTemplate' is empty! Please make sure that you executed the script 'scripts/generate-artifacts.ps1', and commited your changes"
     } 
     Invoke-WebRequest -Uri $artifactsConfig.resourcesTemplate -OutFile "$tempFolderPath/$resourcesTemplateName" -UseBasicParsing
@@ -56,7 +56,7 @@ if ($virtualMachine.location -ne "uksouth" ) {
 
 $pip = ( $TemplateObject.resources | Where-Object -Property type -EQ "Microsoft.Network/publicIPAddresses")
 if ($pip) {
-    if ($pip.name.Count -eq 1) { 
+    if ($pip.name.Count -eq 1) {
         Write-Output "`u{2705} Checked if the Public IP resource exists - OK"
     }  else { 
         Write-Output `u{1F914}
@@ -69,7 +69,7 @@ if ($pip) {
 
 if ($pip.properties.dnsSettings.domainNameLabel) { 
     Write-Output "`u{2705} Checked Public IP DNS label - OK"
-} else { 
+} else {
     Write-Output `u{1F914}
     throw "Unable to verify the Public IP DNS label. Please create the DNS label for your public IP and try again."
 }
