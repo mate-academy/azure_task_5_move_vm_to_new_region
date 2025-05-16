@@ -1,10 +1,10 @@
 param(
     [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-    [string]$ArtifactsStorageAccountName='matestorage123'
+    [string]$ArtifactsStorageAccountName='storageforpractik'
 )
 
 # default script values
-$rgName = "mate-azure-task-5"
+$rgName = "mate-azure-task-2-ukwest"
 $taskName = "task5"
 
 $containerName = "task-artifacts"
@@ -62,7 +62,7 @@ $blob = Set-AzStorageBlobContent @ResourcesTemplateBlob -Force
 
 Write-Output "Generating a SAS token for the template artifact"
 $date = Get-Date
-$date = $date.AddDays(30) 
+$date = $date.AddDays(30)
 $resourcesTemplateSaSToken = New-AzStorageBlobSASToken -Container $containerName -Blob "$taskName/$resourcesTemplateName" -Permission r -ExpiryTime $date -Context $storageAccount.Context
 $resourcesTemplateURL = "$($blob.ICloudBlob.uri.AbsoluteUri)?$resourcesTemplateSaSToken"
 
