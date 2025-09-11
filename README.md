@@ -129,3 +129,23 @@ On the prepared page, Azure resource mover installs to your VM a program called 
     ``` 
 
 3. After that, try to run the “Prepare” stage again.
+
+
+PS F:\Azure\azure_task_5_move_vm_to_new_region> scripts/validate-artifacts.ps1
+Reading config
+Checking if temp folder exists
+Downloading artifacts
+Validating artifacts
+✅ Checked if Virtual Machine exists - OK.
+✅ Checked Virtual Machine location - OK.
+✅ Checked if the Public IP resource exists - OK
+✅ Checked Public IP DNS label - OK
+✅ Checked if the Network Interface resource exists - OK
+✅ Checked if Public IP assigned to the VM - OK
+✅ Checked if the Network Security Group resource exists - OK
+✅ Checked if NSG has SSH network security rule configured - OK
+✅ Checked if NSG has HTTP network security rule configured - OK
+✅ Checked if the web application is running - OK
+
+🥳 Congratulations! All tests passed!
+PS F:\Azure\azure_task_5_move_vm_to_new_region>
