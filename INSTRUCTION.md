@@ -1,3 +1,5 @@
+$PSVersionTable.PSVersion
+Get-Module -Name Az -ListAvailable
 PS D:\pet\mate_academy\azure\azure_task_5_move_vm_to_new_region\azure_task_5_move_vm_to_new_region> Connect-AzAccount                                        
 Please select the account you want to login with.
 
