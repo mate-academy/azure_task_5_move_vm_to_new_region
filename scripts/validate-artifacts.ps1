@@ -130,7 +130,7 @@ if ($httpNsgRule)  {
     throw "Unable to fing network security group rule which allows HTTP connection. Please check if you configured VM Network Security Group to allow connections on 8080 TCP port and try again."
 }
 
-$response = (Invoke-WebRequest -Uri "http://$($pip.properties.dnsSettings.fqdn):8080/api/" -ErrorAction SilentlyContinue) 
+$response = (Invoke-WebRequest -Uri "http://$($pip.properties.dnsSettings.fqdn):8080/" -ErrorAction SilentlyContinue) 
 if ($response) { 
     Write-Output "`u{2705} Checked if the web application is running - OK"
 } else {
@@ -139,3 +139,4 @@ if ($response) {
 
 Write-Output ""
 Write-Output "`u{1F973} Congratulations! All tests passed!"
+
