@@ -1,12 +1,12 @@
 # Move the VM to Another Region
 
-Well done! Your todo web app has become popular! The only small problem is that it has become popular in the west of the UK - most of your app users are coming from there. Users are complaining about the network latency, and you are realizing that you need to host your app in another Azure region. I have good news for you - you don't need to re-create the VM from scratch. In Azure, you can move resources between regions with Azure Resource Mover. 
+Well done! Your todo web app has become popular! The only small problem is that it has become popular in the west of the UK - most of your app users are coming from there. Users are complaining about the network latency, and you are realizing that you need to host your app in another Azure region. I have good news for you - you don't need to re-create the VM from scratch. In Azure, you can move resources between regions with Azure Resource Mover.
 
 In this task you will practice using this service. 
 
 ## Prerequisites
 
-Before completing any task in the module, make sure that you followed all the steps described in the **Environment Setup** topic, in particular: 
+Before completing any task in the module, make sure that you followed all the steps described in the **Environment Setup** topic, in particular:
 
 1. Ensure you have an [Azure](https://azure.microsoft.com/en-us/free/) account and subscription.
 
@@ -40,9 +40,9 @@ In this task, you will need to work with the infrastructure from the previous ta
 
 1. Use [Azure Resource Mover](https://learn.microsoft.com/en-us/azure/resource-mover/tutorial-move-region-virtual-machines) to move your resources: 
     
-    - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available. 
+    - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available.
 
-    - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage. 
+    - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage.
 
     - after you moved the resources, check if your web app is still available on the Internet 
 
@@ -52,11 +52,11 @@ In this task, you will need to work with the infrastructure from the previous ta
 
 4. Submit the solution for a review
 
-5. When the solution is validated, stop the virtual machine and delete the source resource group. 
+5. When the solution is validated, stop the virtual machine and delete the source resource group.
 
-6. Also, stop the VM you moved to the new region if you are not using it (but don't delete it - you will need it for the next tasks). 
+6. Also, stop the VM you moved to the new region if you are not using it (but don't delete it - you will need it for the next tasks).
 
-Note: source resources are not deleted automatically - you need to do it on your own. 
+Note: source resources are not deleted automatically - you need to do it on your own.
 
 
 ## How to Complete Tasks in This Module 
