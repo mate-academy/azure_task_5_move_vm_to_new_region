@@ -1,5 +1,4 @@
-# Move the VM to Another Region
-
+# Move the VM to Another Regi
 Well done! Your todo web app has become popular! The only small problem is that it has become popular in the west of the UK - most of your app users are coming from there. Users are complaining about the network latency, and you are realizing that you need to host your app in another Azure region. I have good news for you - you don't need to re-create the VM from scratch. In Azure, you can move resources between regions with Azure Resource Mover. 
 
 In this task you will practice using this service. 
