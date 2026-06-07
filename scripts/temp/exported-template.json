@@ -1,0 +1,286 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualMachines_vm_todoapp_name": {
+      "type": "String"
+    },
+    "publicIPAddresses_todoapp_pip_name": {
+      "type": "String"
+    },
+    "networkInterfaces_vm_todoapp515_name": {
+      "type": "String"
+    },
+    "virtualNetworks_vm_todoapp_vnet_name": {
+      "type": "String"
+    },
+    "networkSecurityGroups_vm_todoapp_nsg_name": {
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2025-05-01",
+      "name": "[parameters('networkSecurityGroups_vm_todoapp_nsg_name')]",
+      "location": "swedencentral",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH",
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_vm_todoapp_nsg_name'), 'SSH')]",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 300,
+              "direction": "Inbound",
+              "sourcePortRanges": [],
+              "destinationPortRanges": [],
+              "sourceAddressPrefixes": [],
+              "destinationAddressPrefixes": []
+            }
+          },
+          {
+            "name": "todoapp8080",
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroups_vm_todoapp_nsg_name'), 'todoapp8080')]",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8080",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 310,
+              "direction": "Inbound",
+              "sourcePortRanges": [],
+              "destinationPortRanges": [],
+              "sourceAddressPrefixes": [],
+              "destinationAddressPrefixes": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2025-05-01",
+      "name": "[parameters('publicIPAddresses_todoapp_pip_name')]",
+      "location": "swedencentral",
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      },
+      "zones": [
+        "1",
+        "2",
+        "3"
+      ],
+      "properties": {
+        "ipAddress": "4.166.16.2",
+        "publicIPAddressVersion": "IPv4",
+        "publicIPAllocationMethod": "Static",
+        "idleTimeoutInMinutes": 4,
+        "dnsSettings": {
+          "domainNameLabel": "todoapp",
+          "fqdn": "todoapp.swedencentral.cloudapp.azure.com"
+        },
+        "ipTags": []
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2025-05-01",
+      "name": "[parameters('virtualNetworks_vm_todoapp_vnet_name')]",
+      "location": "swedencentral",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "privateEndpointVNetPolicies": "Disabled",
+        "dhcpOptions": {
+          "dnsServers": []
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vm_todoapp_vnet_name'), 'default')]",
+            "properties": {
+              "addressPrefix": "10.0.0.0/24",
+              "delegations": [],
+              "privateEndpointNetworkPolicies": "Disabled",
+              "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+          }
+        ],
+        "virtualNetworkPeerings": [],
+        "enableDdosProtection": false
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2025-11-01",
+      "name": "[parameters('virtualMachines_vm_todoapp_name')]",
+      "location": "swedencentral",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_todoapp515_name'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2ts_v2"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Linux",
+            "name": "[concat(parameters('virtualMachines_vm_todoapp_name'), '_OsDisk_1_30758b44365e4ade8823658fce6c85e6')]",
+            "createOption": "Attach",
+            "caching": "ReadWrite",
+            "managedDisk": {
+              "storageAccountType": "Premium_LRS",
+              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_vm_todoapp_name'), '_OsDisk_1_30758b44365e4ade8823658fce6c85e6'))]"
+            },
+            "deleteOption": "Detach",
+            "diskSizeGB": 30
+          },
+          "dataDisks": [
+            {
+              "lun": 42,
+              "name": "todoapp-data",
+              "createOption": "Attach",
+              "caching": "None",
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS",
+                "id": "[resourceId('Microsoft.Compute/disks', 'todoapp-data')]"
+              },
+              "deleteOption": "Detach",
+              "diskSizeGB": 64,
+              "toBeDetached": false
+            }
+          ],
+          "diskControllerType": "SCSI"
+        },
+        "securityProfile": {
+          "securityType": "Standard"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_todoapp515_name'))]",
+              "properties": {
+                "primary": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+      "apiVersion": "2025-05-01",
+      "name": "[concat(parameters('networkSecurityGroups_vm_todoapp_nsg_name'), '/SSH')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_todoapp_nsg_name'))]"
+      ],
+      "properties": {
+        "protocol": "TCP",
+        "sourcePortRange": "*",
+        "destinationPortRange": "22",
+        "sourceAddressPrefix": "*",
+        "destinationAddressPrefix": "*",
+        "access": "Allow",
+        "priority": 300,
+        "direction": "Inbound",
+        "sourcePortRanges": [],
+        "destinationPortRanges": [],
+        "sourceAddressPrefixes": [],
+        "destinationAddressPrefixes": []
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+      "apiVersion": "2025-05-01",
+      "name": "[concat(parameters('networkSecurityGroups_vm_todoapp_nsg_name'), '/todoapp8080')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_todoapp_nsg_name'))]"
+      ],
+      "properties": {
+        "protocol": "TCP",
+        "sourcePortRange": "*",
+        "destinationPortRange": "8080",
+        "sourceAddressPrefix": "*",
+        "destinationAddressPrefix": "*",
+        "access": "Allow",
+        "priority": 310,
+        "direction": "Inbound",
+        "sourcePortRanges": [],
+        "destinationPortRanges": [],
+        "sourceAddressPrefixes": [],
+        "destinationAddressPrefixes": []
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2025-05-01",
+      "name": "[concat(parameters('virtualNetworks_vm_todoapp_vnet_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_vm_todoapp_vnet_name'))]"
+      ],
+      "properties": {
+        "addressPrefix": "10.0.0.0/24",
+        "delegations": [],
+        "privateEndpointNetworkPolicies": "Disabled",
+        "privateLinkServiceNetworkPolicies": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2025-05-01",
+      "name": "[parameters('networkInterfaces_vm_todoapp515_name')]",
+      "location": "swedencentral",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_todoapp_pip_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vm_todoapp_vnet_name'), 'default')]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_todoapp_nsg_name'))]"
+      ],
+      "kind": "Regular",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_todoapp515_name')), '/ipConfigurations/ipconfig1')]",
+            "properties": {
+              "privateIPAddress": "10.0.0.4",
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_todoapp_pip_name'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vm_todoapp_vnet_name'), 'default')]"
+              },
+              "primary": true,
+              "privateIPAddressVersion": "IPv4"
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": []
+        },
+        "enableAcceleratedNetworking": false,
+        "enableIPForwarding": false,
+        "disableTcpStateTracking": false,
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_vm_todoapp_nsg_name'))]"
+        },
+        "nicType": "Standard",
+        "auxiliaryMode": "None",
+        "auxiliarySku": "None"
+      }
+    }
+  ]
+}
