@@ -1,12 +1,12 @@
 # Move the VM to Another Region
 
-Well done! Your todo web app has become popular! The only small problem is that it has become popular in the west of the UK - most of your app users are coming from there. Users are complaining about the network latency, and you are realizing that you need to host your app in another Azure region. I have good news for you - you don't need to re-create the VM from scratch. In Azure, you can move resources between regions with Azure Resource Mover. 
+Well done! Your todo web app has become popular! The only small problem is that it has become popular in the west of the UK - most of your app users are coming from there. Users are complaining about the network latency, and you are realizing that you need to host your app in another Azure region. I have good news for you - you don't need to re-create the VM from scratch. In Azure, you can move resources between regions with Azure Resource Mover.
 
-In this task you will practice using this service. 
+In this task you will practice using this service.
 
 ## Prerequisites
 
-Before completing any task in the module, make sure that you followed all the steps described in the **Environment Setup** topic, in particular: 
+Before completing any task in the module, make sure that you followed all the steps described in the **Environment Setup** topic, in particular:
 
 1. Ensure you have an [Azure](https://azure.microsoft.com/en-us/free/) account and subscription.
 
@@ -14,16 +14,16 @@ Before completing any task in the module, make sure that you followed all the st
 
 3. In the `mate-resources` resource group, create a storage account (any name) and a `task-artifacts` container.
 
-4. Install [PowerShell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4) on your computer. All tasks in this module use Powershell 7. To run it in the terminal, execute the following command: 
+4. Install [PowerShell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4) on your computer. All tasks in this module use Powershell 7. To run it in the terminal, execute the following command:
     ```
     pwsh
     ```
 
-5. Install [Azure module for PowerShell 7](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-11.3.0): 
+5. Install [Azure module for PowerShell 7](https://learn.microsoft.com/en-us/powershell/azure/install-azure-powershell?view=azps-11.3.0):
     ```
     Install-Module -Name Az -Repository PSGallery -Force
     ```
-If you are a Windows user, before running this command, please also run the following: 
+If you are a Windows user, before running this command, please also run the following:
     ```
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     ```
@@ -35,16 +35,16 @@ If you are a Windows user, before running this command, please also run the foll
 
 ## Requirements
 
-In this task, you will need to work with the infrastructure from the previous task [previous task](https://github.com/mate-academy/azure_task_3_attach_data_disk). In order to complete the task, you need to perform the following steps: 
+In this task, you will need to work with the infrastructure from the previous task [previous task](https://github.com/mate-academy/azure_task_3_attach_data_disk). In order to complete the task, you need to perform the following steps:
 
 
-1. Use [Azure Resource Mover](https://learn.microsoft.com/en-us/azure/resource-mover/tutorial-move-region-virtual-machines) to move your resources: 
-    
-    - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available. 
+1. Use [Azure Resource Mover](https://learn.microsoft.com/en-us/azure/resource-mover/tutorial-move-region-virtual-machines) to move your resources:
 
-    - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage. 
+    - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available.
 
-    - after you moved the resources, check if your web app is still available on the Internet 
+    - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage.
+
+    - after you moved the resources, check if your web app is still available on the Internet
 
 2. Run artifacts generation script `scripts/generate-artifacts.ps1`
 
@@ -52,18 +52,18 @@ In this task, you will need to work with the infrastructure from the previous ta
 
 4. Submit the solution for a review
 
-5. When the solution is validated, stop the virtual machine and delete the source resource group. 
+5. When the solution is validated, stop the virtual machine and delete the source resource group.
 
-6. Also, stop the VM you moved to the new region if you are not using it (but don't delete it - you will need it for the next tasks). 
+6. Also, stop the VM you moved to the new region if you are not using it (but don't delete it - you will need it for the next tasks).
 
-Note: source resources are not deleted automatically - you need to do it on your own. 
+Note: source resources are not deleted automatically - you need to do it on your own.
 
 
-## How to Complete Tasks in This Module 
+## How to Complete Tasks in This Module
 
-Tasks in this module are relying on 2 PowerShell scripts: 
+Tasks in this module are relying on 2 PowerShell scripts:
 
-- `scripts/generate-artifacts.ps1` generates the task “artifacts” and uploads them to cloud storage. An “artifact” is evidence of a task completed by you. Each task will have its own script, which will gather the required artifacts. The script also adds a link to the generated artifact in the `artifacts.json` file in this repository — make sure to commit changes to this file after you run the script. 
+- `scripts/generate-artifacts.ps1` generates the task “artifacts” and uploads them to cloud storage. An “artifact” is evidence of a task completed by you. Each task will have its own script, which will gather the required artifacts. The script also adds a link to the generated artifact in the `artifacts.json` file in this repository — make sure to commit changes to this file after you run the script.
 - `scripts/validate-artifacts.ps1` validates the artifacts generated by the first script. It loads information about the task artifacts from the `artifacts.json` file.
 
 Here is how to complete tasks in this module:
@@ -72,13 +72,13 @@ Here is how to complete tasks in this module:
 
 2. Make sure you completed the steps described in the Prerequisites section
 
-3. Complete the task described in the Requirements section 
+3. Complete the task described in the Requirements section
 
-4. Run `scripts/generate-artifacts.ps1` to generate task artifacts. The script will update the file `artifacts.json` in this repo. 
+4. Run `scripts/generate-artifacts.ps1` to generate task artifacts. The script will update the file `artifacts.json` in this repo.
 
-5. Run `scripts/validate-artifacts.ps1` to test yourself. If tests are failing - follow the recommendation from the test script error message to fix or re-deploy your infrastructure. When you are ready to test yourself again - **re-generate the artifacts** (step 4) and re-run tests again. 
+5. Run `scripts/validate-artifacts.ps1` to test yourself. If tests are failing - follow the recommendation from the test script error message to fix or re-deploy your infrastructure. When you are ready to test yourself again - **re-generate the artifacts** (step 4) and re-run tests again.
 
-6. When all tests will pass - commit your changes and submit the solution for review. 
+6. When all tests will pass - commit your changes and submit the solution for review.
 
 Pro tip: If you are stuck with any of the implementation steps, run `scripts/generate-artifacts.ps1` and `scripts/validate-artifacts.ps1`. The validation script might give you a hint on what to do.  
 
@@ -92,7 +92,7 @@ Possible Causes: .
 Recommended Action: Please refer to https://aka.ms/a2a_supported_linux_os_versions
 "
 
-No need to worry. You can resolve it! 
+No need to worry. You can resolve it!
 On the prepared page, Azure resource mover installs to your VM a program called 'mobility service' - this program is used to replicate the data from the source VM to the target one. The error message means that the mobility service does not support the OS kernel version that is used by your VM. The easiest workaround is to downgrade the kernel version and try to run the 'Prepare' stage again. To downgrade the kernel version:
 
 1. Find the latest supported kernel version for Ubuntu 22.04 [here](https://learn.microsoft.com/en-us/azure/site-recovery/azure-to-azure-support-matrix#linux)
@@ -104,28 +104,28 @@ On the prepared page, Azure resource mover installs to your VM a program called 
         sudo apt search linux-azure | grep 6.5.0-1015-azure
     ```
 
-    - Install packages that you got in the previous step using apt-get. For example: 
+    - Install packages that you got in the previous step using apt-get. For example:
     ```
         sudo apt-get install linux-image-unsigned-6.5.0-1015-azure linux-modules-6.5.0-1015-azure linux-modules-extra-6.5.0-1015-azure
     ```
 
-    - Remove the current kernel version: 
+    - Remove the current kernel version:
     
     ```
         sudo apt remove linux-image-<kernel version from the error message>
     ```
-    Example command for the kernel version `6.5.0-1016-azure`: 
-    
+    Example command for the kernel version `6.5.0-1016-azure`:
+
     ```
         sudo apt remove linux-image-6.5.0-1016-azure
     ```
-    
+
     During the process, you confirm with <No> that you do not want to abort the removal process.
-    
+
     - As the last step, you initiate a reboot with:
-    
+
     ```
         sudo reboot
-    ``` 
+    ```
 
 3. After that, try to run the “Prepare” stage again.
