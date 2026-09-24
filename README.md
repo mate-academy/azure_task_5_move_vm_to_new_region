@@ -35,12 +35,14 @@ If you are a Windows user, before running this command, please also run the foll
 
 ## Requirements
 
-In this task, you will need to work with the infrastructure from the previous task [previous task](https://github.com/mate-academy/azure_task_3_attach_data_disk). In order to complete the task, you need to perform the following steps: 
+In this task, you will need to work with the infrastructure from the previous task [previous task](https://github.com/mate-academy/azure_task_4_reset_vm_password). In order to complete the task, you need to perform the following steps: 
 
 
 1. Use [Azure Resource Mover](https://learn.microsoft.com/en-us/azure/resource-mover/tutorial-move-region-virtual-machines) to move your resources: 
     
     - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available. 
+
+      > In this solution the VM size (`Standard_B2ats_v2`) is not available for the subscription in 'UK West' (`NotAvailableForSubscription`), so the target region is **Spain Central** (`spaincentral`), which has the same size available.
 
     - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage. 
 
