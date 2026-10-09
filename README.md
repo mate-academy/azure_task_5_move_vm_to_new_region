@@ -40,7 +40,7 @@ In this task, you will need to work with the infrastructure from the previous ta
 
 1. Use [Azure Resource Mover](https://learn.microsoft.com/en-us/azure/resource-mover/tutorial-move-region-virtual-machines) to move your resources: 
     
-    - use 'UK West' as a target region. If your VM size is not available in the 'UK West' Azure region - select any other Azure region where it is available. 
+    - use any other Azure region as a target region. Select a region where your VM size is available and your subscription has enough quota. 
 
     - Make sure that all resources are moved to the new resource group, called `mate-azure-task-5`. To do that, create the target resource group before any other steps and adjust the configuration of each resource in the Azure Resource Mover before initiating the Prepare stage. 
 
