@@ -41,6 +41,14 @@ if ($artifactContainer) {
 # generation of artifacts
 Write-Output "Generating artifacts"
 
+Write-Output "Reading the source Virtual Machine region"
+$sourceVm = Get-AzVM -ResourceGroupName "mate-azure-task-2" -ErrorAction SilentlyContinue | Select-Object -First 1
+if ($sourceVm) {
+    $sourceRegion = $sourceVm.Location
+} else {
+    throw "Unable to find the source Virtual Machine in the resource group mate-azure-task-2. Please run this script before you delete the source resource group."
+}
+
 Write-Output "Checking if temp folder exists"
 if (-not (Test-Path "$tempFolderPath")) { 
     Write-Output "Temp folder does not exist, creating..."
@@ -71,5 +79,6 @@ $resourcesTemplateURL = "$($blob.ICloudBlob.uri.AbsoluteUri)?$resourcesTemplateS
 Write-Output "Updating artifacts config"
 $artifactsConfig = @{
     resourcesTemplate = "$resourcesTemplateURL"
+    sourceRegion = "$sourceRegion"
 }
 $artifactsConfig | ConvertTo-Json | Out-File -FilePath $artifactsConfigPath -Force

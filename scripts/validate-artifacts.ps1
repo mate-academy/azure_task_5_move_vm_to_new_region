@@ -47,11 +47,14 @@ if ($virtualMachine) {
     throw "Unable to find Virtual Machine in the task resource group. Please make sure that you created the Virtual Machine and try again."
 }
 
-if ($virtualMachine.location -ne "uksouth" ) { 
+$artifactsConfig = Get-Content -Path $artifactsConfigPath | ConvertFrom-Json
+if (-not $artifactsConfig.sourceRegion) { 
+    Write-Warning "Unable to verify the Virtual Machine location: artifact config value 'sourceRegion' is empty. Please run the script 'scripts/generate-artifacts.ps1' before you delete the source resource group."
+} elseif ($virtualMachine.location -ne $artifactsConfig.sourceRegion) { 
     Write-Output "`u{2705} Checked Virtual Machine location - OK."
 } else { 
     Write-Output `u{1F914}
-    throw "Virtual is not deployed to the UK West region. Please migrate VM to another region and try again."
+    throw "Virtual Machine is still deployed to the source region $($artifactsConfig.sourceRegion). Please migrate VM to another region and try again."
 }
 
 $pip = ( $TemplateObject.resources | Where-Object -Property type -EQ "Microsoft.Network/publicIPAddresses")
