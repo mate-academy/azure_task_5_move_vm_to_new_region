@@ -1,3 +1,4 @@
 {
-  "resourcesTemplate": ""
+  "sourceRegion": "indiasouthcentral",
+  "resourcesTemplate": "https://matestorage19741011.blob.core.windows.net/task-artifacts/task5/exported-template.json?sv=2025-07-05&se=2026-11-13T11%3A20%3A44Z&sr=b&sp=r&sig=Zbk5S0q4QvPDkMXo5saAWN6ajsfMm6v63VSjB0Z28OY%3D"
 }
