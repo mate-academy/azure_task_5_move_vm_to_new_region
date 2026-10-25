@@ -1,3 +1,4 @@
 {
-  "resourcesTemplate": ""
+  "sourceRegion": "swedencentral",
+  "resourcesTemplate": "https://devopslabds.blob.core.windows.net/task-artifacts/task5/exported-template.json?sv=2025-07-05&se=2026-11-24T18%3A15%3A12Z&sr=b&sp=r&sig=tqa%2Fi6QwBYMELPcIwpEwRfI67Uf0YZAV%2F2QOgnf%2FcTU%3D"
 }
