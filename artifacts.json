@@ -1,3 +1,4 @@
 {
-  "resourcesTemplate": ""
+  "resourcesTemplate": "https://matezuare.blob.core.windows.net/task-artifacts/task5/exported-template.json?sv=2025-07-05&se=2026-11-29T10%3A54%3A32Z&sr=b&sp=r&sig=0bcR%2FZv%2BcTlFsJt8%2F%2B0X%2FF%2BRwkzvl4yhpm8GhS5nrlk%3D",
+  "sourceRegion": "eastus"
 }
